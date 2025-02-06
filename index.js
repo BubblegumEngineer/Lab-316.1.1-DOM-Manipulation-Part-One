@@ -3,10 +3,21 @@
 // menuLinks variable is an array of objects.
 // JSON is a data format that follows a key/value pair. ex: Key is 'text', and the value is 'about'
 var menuLinks = [
-  { text: "about", href: "/about" },
-  { text: "catalog", href: "/catalog" },
-  { text: "orders", href: "/orders" },
-  { text: "account", href: "/account" },
+  {text: 'about', href: '/about'},
+  {text: 'catalog', href: '#', subLinks: [
+    {text: 'all', href: '/catalog/all'},
+    {text: 'top selling', href: '/catalog/top'},
+    {text: 'search', href: '/catalog/search'},
+  ]},
+  {text: 'orders', href: '#' , subLinks: [
+    {text: 'new', href: '/orders/new'},
+    {text: 'pending', href: '/orders/pending'},
+    {text: 'history', href: '/orders/history'},
+  ]},
+  {text: 'account', href: '#', subLinks: [
+    {text: 'profile', href: '/account/profile'},
+    {text: 'sign out', href: '/account/signout'},
+  ]},
 ];
 
 console.log("Part 1: Getting Started");
@@ -87,4 +98,69 @@ console.log("Part 4: Adding Interactivity");
 console.log("================================");
 
 
+
+console.log("LAB 316.3.1: DOM Manipulation (Part Two)");
+console.log("=====================================");
+
+console.log("Part 3: Creating the Submenu");
+console.log("=====================================");
+
+//We will start by using some DOM manipulation techniques to format the submenu before adding interaction to each menu component.
+//All future steps should be completed within the index.js file.
+
+
+// 1. Select and cache the <nav id="sub-menu"> element in a variable named subMenuEl.
+const subMenuEl = document.querySelector("#sub-menu");
+console.log(subMenuEl);
+
+
+// 2. Set the height subMenuEl element to be "100%".
+subMenuEl.style.height = "100%";
+console.log(subMenuEl.style.height);
+
+
+// 3. Set the background color of subMenuEl to the value stored in the --sub-menu-bg CSS custom property.
+subMenuEl.style.backgroundColor = "var(--sub-menu-bg)";
+console.log(subMenuEl.style.backgroundColor);
+
+
+// 4. Add the class of flex-around to the subMenuEl element.
+subMenuEl.classList.add("flex-around");
+
+// Now, change the position of the submenu to temporarily hide it. Later, we will make the submenu appear dynamically based on user interaction:
+
+// 1. Set the CSS position property of subMenuEl to the value of absolute.
+subMenuEl.style.position = "absolute";
+
+// 2. Set the CSS top property of subMenuEl to the value of 0.
+subMenuEl.style.top = "0";
+
+console.log("=====================================");
+console.log("Part 4: Adding Menu Interaction");
+console.log("=====================================");
+
+//In order to add interaction:
+// 1. Select and cache (save) the all of the <a> elements inside of topMenuEl in a variable named topMenuLinks.
+// This created an array called topMenuLinks by taking the reference of the "a" elements from the topMenuEL elements. (this is not hard coded)
+const topMenuLinks = topMenuEl.querySelectorAll("a"); 
+console.log(topMenuLinks);
+
+// 2. Attach a delegated 'click' event listener to topMenuEl.
+// the "click" tells the addEventListener what to listen for and the 'handleMenuClick' is a created name for a function that says what will happen when "click" even happens. When the first part of the parentheses happens, the second part will be called.
+topMenuEl.addEventListener("click",handleMenuClick); 
+
+// - The first line of code of the event listener function should call the event object's preventDefault() method.
+
+// -The second line of code of the function should immediately return if the element clicked was not an <a> element.
+
+function handleMenuClick(event) { //passing the event object
+  event.preventDefault(); // preventing a default behavior for that event.
+  if (event.target.tagName !== "A") { //when checking for a tag name the tag needs to be an UpperCase letter
+    return;
+  }
+  
+  // -Log the content of the <a> to verify the handler is working.
+  console.log(event.target.textContent); // this displays only the text.
+   //console.log(event.target); // this displays the whole href.
+}
 
